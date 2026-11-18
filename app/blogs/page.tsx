@@ -6,9 +6,10 @@ export const instant = false
 const Blogs = async ({ searchParams }: { searchParams: Promise<{ filter?: string }>}) => {
   const { filter } = await searchParams
   
-  const blogs = [...getBlogs()]
-    .filter((blog) => (filter ? blog.title.toLowerCase().includes(filter.toLocaleLowerCase()) : true))
-    .sort((a, b) => b.likes - a.likes)
+  const allBlogs = await getBlogs()
+  const blogs = allBlogs.filter((blog) =>
+    filter ? blog.title.toLowerCase().includes(filter.toLowerCase()) : true
+  )
 
   return (
     <div>

@@ -5,7 +5,7 @@ import { likeBlog } from "@/services/blogs"
 
 export const likeBlogAction = async (formData: FormData) => {
   const id = Number(formData.get("id"))
-  likeBlog(id)
+  await likeBlog(id)
   revalidatePath(`/blogs/${id}`)
   revalidatePath("/blogs")
 }
