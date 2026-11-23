@@ -15,6 +15,20 @@
       "when": 1795005705405,
       "tag": "0001_aspiring_firebrand",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1795429228613,
+      "tag": "0002_blushing_robbie_robertson",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1795449158036,
+      "tag": "0003_overjoyed_glorian",
+      "breakpoints": true
     }
   ]
 }

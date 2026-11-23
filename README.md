@@ -23,3 +23,10 @@ let blogs: Blog[] = [
   { id: 1, title: 'Full Stack Open', author: 'Matti Luukkainen', url: 'https://fullstackopen.com/en/', likes: 10 },
   { id: 2, title: 'Next.js', author: 'Vercel', url: 'https://nextjs.org/', likes: 3 },
 ]
+
+# Create password for a user using set-password.ts
+npx tsx set-password.ts mluukkai secretpassword
+
+
+# Drizzle Studio
+npx drizzle-kit studio

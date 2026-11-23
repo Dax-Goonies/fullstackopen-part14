@@ -1,4 +1,5 @@
 import { pgTable, integer, serial, text } from "drizzle-orm/pg-core"
+import { relations } from "drizzle-orm"
 
 // SCHEMA: Blog data structure
 export const blogs = pgTable("blogs", {
@@ -15,4 +16,18 @@ export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   username: text("username").notNull().unique(),
   name: text("name").notNull(),
+  passwordHash: text("password_hash").notNull().default(""),
+  token: text("token"),
 })
+
+// JOIN TABLE: One user can have many blogs
+export const usersRelations = relations(users, ({ many }) => ({
+  blogs: many(blogs),
+}))
+
+export const blogsRelations = relations(blogs, ({ one }) => ({
+  user: one(users, {
+    fields: [blogs.userId],
+    references: [users.id],
+  }),
+}))

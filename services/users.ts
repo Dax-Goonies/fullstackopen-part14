@@ -12,3 +12,13 @@ export const getUserById = async (id: number) => {
   const result = await db.select().from(users).where(eq(users.id, id))
   return result[0]
 }
+
+// Fetch the user and their associated blogs together (join query)
+export const getUserByUsername = async (username: string) => {
+  return db.query.users.findFirst({
+    where: eq(users.username, username),
+    with: {
+      blogs: true,
+    },
+  })
+}

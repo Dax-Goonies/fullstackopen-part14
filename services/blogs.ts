@@ -8,8 +8,8 @@ export const getBlogs = async () => {
 }
 
 // Add a new blog
-export const addBlog = async (blog: { title: string, author: string, url: string }) => {
-  const result = await db.insert(blogs).values(blog).returning()
+export const addBlog = async (blog: { title: string, author: string, url: string }, userId: number) => {
+  const result = await db.insert(blogs).values({...blog, userId}).returning()
   return result[0]
 }
 

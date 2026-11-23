@@ -1,17 +1,22 @@
-import Link from 'next/link'
-import { ReactNode } from 'react'
+import "./globals.css"
+import { ReactNode } from "react"
+import AuthSessionProvider from "./components/SessionProvider"
+import NavBar from "./components/NavBar"
+import { NotificationProvider } from "./components/NotificationContext"
+import Notification from "./components/Notification"
 
+// Base layout of the navigation bar
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body>
-        <nav>
-          <Link href="/">Home</Link>
-          <Link href="/blogs">Blogs</Link>
-          <Link href="/blogs/new">New blog</Link>
-          <Link href="/users">Users</Link>
-        </nav>
-        {children}
+      <body className="min-h-screen bg-background text-foreground">
+        <AuthSessionProvider>
+          <NotificationProvider>
+            <NavBar />
+            <Notification />
+            {children}
+          </NotificationProvider>
+        </AuthSessionProvider>
       </body>
     </html>
   )
