@@ -4,7 +4,7 @@ A blog application rebuilt with Next.js (App Router), PostgreSQL via Neon, and D
 
 ## 🔗 Deployment
 
-- Live app: https://fullstackopen-part14-ezmbozjvq-dax-7b92.vercel.app/
+- Live app: https://fullstackopen-part14-ten.vercel.app/
 
 ## 📦 What's here
 
@@ -51,7 +51,7 @@ npx tsx set-password.ts
 
 ## Links
 
-- Repository for Full Stack Open Part 14 Next.js answers:
-- Live app via Vercel: 
+- Repository for Full Stack Open Part 14 Next.js answers: https://github.com/Dax-Goonies/fullstackopen-part14
+- Live app via Vercel: https://fullstackopen-part14-ten.vercel.app/
 
 
