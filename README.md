@@ -2,10 +2,6 @@
 
 A blog application rebuilt with Next.js (App Router), PostgreSQL via Neon, and Drizzle ORM, covering server actions, authentication, a personal reading list, an API route, MDX, and end-to-end testing.
 
-## 🔗 Deployment
-
-- Live app: https://fullstackopen-part14-ten.vercel.app/
-
 ## 📦 What's here
 
 - **Next.js App Router** — file-based routing, Server Components, Server Actions, Route Handlers.
@@ -42,16 +38,42 @@ npx drizzle-kit migrate
 npx drizzle-kit studio
 ```
 
-## 👤 Managing users
+## 🧪 Testing
 
-**Set or reset a user's password directly** (bypasses the registration form):
+**Run the end-to-end test suite** (requires the app running locally and a dedicated test database):
 ```bash
-npx tsx set-password.ts
+npm run test:e2e
 ```
 
-## Links
+Tests rely on two production-disabled API routes to reset and seed the database:
+
+- `DELETE /api/testing/reset` — empties all tables.
+- `POST /api/testing/users` — creates a user directly, e.g.:
+  ```json
+  {
+    "username": "testuser",
+    "name": "Test User",
+    "password": "testpass123"
+  }
+  ```
+
+The suite also runs automatically on GitHub Actions on every push, using repository secrets (`DATABASE_URL`, `NEXTAUTH_SECRET`, `NEXTAUTH_URL`) pointing at a separate test database.
+
+## 🧹 Code style
+
+**Format the whole codebase with Prettier:**
+```bash
+npx prettier --write .
+```
+
+**Generate a random secret** (for `NEXTAUTH_SECRET`, etc.):
+```bash
+echo "$(openssl rand -base64 32)"
+```
+
+## 🔗 Links
 
 - Repository for Full Stack Open Part 14 Next.js answers: https://github.com/Dax-Goonies/fullstackopen-part14
+- Base template for a Next.js app: https://github.com/fullstack-hy2020/nextjs-notes
 - Live app via Vercel: https://fullstackopen-part14-ten.vercel.app/
-
-
+- Workflow passing: https://github.com/Dax-Goonies/fullstackopen-part14/actions
