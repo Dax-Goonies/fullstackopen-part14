@@ -1,16 +1,7 @@
-import { redirect } from "next/navigation"
-import { auth } from "@/auth"
-import BlogForm from "@/app/components/BlogForm"
-
-export const instant = false
+import BlogForm from '@/app/components/BlogForm'
 
 // Create a new blog page
-export default async function NewBlog() {
-  const session = await auth()
-  if (!session?.user) {
-    redirect("/")
-  }
-
+export default function NewBlog() {
   return (
     <div>
       <BlogForm />

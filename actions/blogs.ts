@@ -1,21 +1,24 @@
-"use server"
+'use server'
 
-import { revalidatePath } from "next/cache"
-import { auth } from "@/auth"
-import { addBlog, likeBlog } from "@/services/blogs"
+import { revalidatePath } from 'next/cache'
+import { auth } from '@/auth'
+import { addBlog, likeBlog } from '@/services/blogs'
 
-// Like a blog
-export const likeBlogAction = async (prevSate: { success: boolean },formData: FormData) => {
-  const id = Number(formData.get("id"))
+// Like a blog, triggers a notification
+export const likeBlogAction = async (
+  prevSate: { success: boolean },
+  formData: FormData,
+) => {
+  const id = Number(formData.get('id'))
   await likeBlog(id)
   revalidatePath(`/blogs/${id}`)
-  revalidatePath("/blogs")
+  revalidatePath('/blogs')
   return { success: true }
 }
 
 type FormState = {
-  errors: { title?: string, author?: string, url?: string }
-  values: { title: string, author: string, url: string }
+  errors: { title?: string; author?: string; url?: string }
+  values: { title: string; author: string; url: string }
   success: boolean
 }
 
@@ -44,7 +47,7 @@ export const createBlog = async (prevState: FormState, formData: FormData) => {
   const session = await auth()
   if (!session?.user?.id) {
     return {
-      errors: { title: 'you must be logged in to create a blog' },
+      errors: { title: 'You must be logged in to create a blog' },
       values: { title, author, url },
       success: false,
     }
@@ -53,5 +56,9 @@ export const createBlog = async (prevState: FormState, formData: FormData) => {
   await addBlog({ title, author, url }, Number(session.user.id))
 
   revalidatePath('/blogs')
-  return { errors: {}, values: { title: '', author: '', url: '' }, success: true }
+  return {
+    errors: {},
+    values: { title: '', author: '', url: '' },
+    success: true,
+  }
 }

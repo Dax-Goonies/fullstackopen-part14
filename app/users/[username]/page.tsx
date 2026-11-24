@@ -1,11 +1,15 @@
-import { notFound } from "next/navigation"
-import Link from "next/link"
-import { getUserByUsername } from "@/services/users"
+import { notFound } from 'next/navigation'
+import Link from 'next/link'
+import { getUserByUsername } from '@/services/users'
 
 export const instant = false
 
-// Individual user page
-const UserPage = async ({ params }: { params: Promise<{ username: string }> }) => {
+// Individual user page displaying the user's blogs
+const UserPage = async ({
+  params,
+}: {
+  params: Promise<{ username: string }>
+}) => {
   const { username } = await params
   const user = await getUserByUsername(username)
 
@@ -22,7 +26,10 @@ const UserPage = async ({ params }: { params: Promise<{ username: string }> }) =
         ) : (
           user.blogs.map((blog) => (
             <li key={blog.id}>
-              <Link href={`/blogs/${blog.id}`} className="text-blue-600 hover:underline">
+              <Link
+                href={`/blogs/${blog.id}`}
+                className="text-blue-600 hover:underline"
+              >
                 {blog.title}
               </Link>
             </li>

@@ -1,6 +1,6 @@
-"use client"
+'use client'
 
-import { SessionProvider } from "next-auth/react"
+import { SessionProvider } from 'next-auth/react'
 
 // Session wrapper component
 export default function AuthSessionProvider({

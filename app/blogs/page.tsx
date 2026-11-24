@@ -4,13 +4,17 @@ import { getBlogs } from '@/services/blogs'
 export const instant = false
 
 // List of blogs page
-const Blogs = async ({ searchParams }: { searchParams: Promise<{ filter?: string }>}) => {
+const Blogs = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ filter?: string }>
+}) => {
   const { filter } = await searchParams
-  
+
   const allBlogs = await getBlogs()
 
   const blogs = allBlogs.filter((blog) =>
-    filter ? blog.title.toLowerCase().includes(filter.toLowerCase()) : true
+    filter ? blog.title.toLowerCase().includes(filter.toLowerCase()) : true,
   )
 
   return (
@@ -21,19 +25,21 @@ const Blogs = async ({ searchParams }: { searchParams: Promise<{ filter?: string
         <input
           type="text"
           name="filter"
+          data-testid="filter-input"
           defaultValue={filter}
           className="border rounded px-3 py-2 flex-1"
           placeholder="search by title"
         />
         <button
           type="submit"
+          data-testid="search-button"
           className="bg-gray-600 hover:bg-gray-500 px-3 py-1 rounded text-sm text-white"
         >
           Search
         </button>
       </form>
 
-      <ul className="space-y-2">
+      <ul data-testid="blogs-list" className="space-y-2">
         {blogs.length === 0 ? (
           <li className="text-gray-600">No blogs match your search</li>
         ) : (
@@ -42,7 +48,7 @@ const Blogs = async ({ searchParams }: { searchParams: Promise<{ filter?: string
               <Link href={`/blogs/${blog.id}`} className="text-blue-600 hover:underline">
                 {blog.title}
               </Link>{" "}
-              by {blog.author}
+              by {blog.author} — {blog.likes} likes
             </li>
           ))
         )}

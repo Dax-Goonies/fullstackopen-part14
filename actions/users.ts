@@ -1,24 +1,32 @@
-"use server"
+'use server'
 
-import bcrypt from "bcryptjs"
-import { db } from "@/db"
-import { users } from "@/db/schema"
-import { eq } from "drizzle-orm"
-import { auth } from "@/auth"
-import { revalidatePath } from "next/cache"
+import bcrypt from 'bcryptjs'
+import { eq } from 'drizzle-orm'
+import { revalidatePath } from 'next/cache'
+import { db } from '@/db'
+import { users } from '@/db/schema'
+import { auth } from '@/auth'
 
 type FormState = {
-  errors: { username?: string, name?: string, password?: string, passwordConfirm?: string }
-  values: { username: string, name: string }
+  errors: {
+    username?: string
+    name?: string
+    password?: string
+    passwordConfirm?: string
+  }
+  values: { username: string; name: string }
   success: boolean
 }
 
-// Register a new user
-export const registerUser = async (prevState: FormState, formData: FormData) => {
-  const username = (formData.get("username") as string)?.trim()
-  const name = (formData.get("name") as string)?.trim()
-  const password = formData.get("password") as string
-  const passwordConfirm = formData.get("passwordConfirm") as string
+// Register a new user with validation checks
+export const registerUser = async (
+  prevState: FormState,
+  formData: FormData,
+) => {
+  const username = (formData.get('username') as string)?.trim()
+  const name = (formData.get('name') as string)?.trim()
+  const password = formData.get('password') as string
+  const passwordConfirm = formData.get('passwordConfirm') as string
 
   const errors: FormState['errors'] = {}
 
@@ -39,7 +47,10 @@ export const registerUser = async (prevState: FormState, formData: FormData) => 
     return { errors, values: { username, name }, success: false }
   }
 
-  const existing = await db.select().from(users).where(eq(users.username, username))
+  const existing = await db
+    .select()
+    .from(users)
+    .where(eq(users.username, username))
   if (existing.length > 0) {
     return {
       errors: { username: 'username already taken' },
@@ -60,11 +71,14 @@ export const generateToken = async () => {
 
   if (!session?.user?.id) {
     throw new Error('You must be logged in')
-  } 
+  }
 
   const token = crypto.randomUUID()
 
-  await db.update(users).set({ token }).where(eq(users.id, Number(session.user.id)))
+  await db
+    .update(users)
+    .set({ token })
+    .where(eq(users.id, Number(session.user.id)))
 
   revalidatePath('/me')
 }
